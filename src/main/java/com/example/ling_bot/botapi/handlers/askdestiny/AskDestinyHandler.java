@@ -3,6 +3,7 @@ package com.example.ling_bot.botapi.handlers.askdestiny;
 import com.example.ling_bot.botapi.BotState;
 import com.example.ling_bot.botapi.InputMessageHandler;
 import com.example.ling_bot.service.ReplyMessageService;
+import com.example.ling_bot.utils.Emojis;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -50,9 +51,9 @@ public class AskDestinyHandler implements InputMessageHandler {
         InlineKeyboardButton buttonIWillThink = new InlineKeyboardButton();
         InlineKeyboardButton buttonIDontKnow = new InlineKeyboardButton();
 
-        buttonYes.setText(messagesService.getReplyText(localeTag, "reply.yes"));
-        buttonNo.setText(messagesService.getReplyText(localeTag, "reply.no"));
-        buttonIWillThink.setText(messagesService.getReplyText(localeTag, "reply.iWillThink"));
+        buttonYes.setText(messagesService.getReplyText(localeTag, "reply.yes", Emojis.LIKE));
+        buttonNo.setText(messagesService.getReplyText(localeTag, "reply.no", Emojis.PRAY));
+        buttonIWillThink.setText(messagesService.getReplyText(localeTag, "reply.iWillThink", Emojis.HMM));
         buttonIDontKnow.setText(messagesService.getReplyText(localeTag, "reply.iDontKnow"));
 
         buttonYes.setCallbackData("buttonYes");

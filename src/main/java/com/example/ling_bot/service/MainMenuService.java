@@ -1,5 +1,6 @@
 package com.example.ling_bot.service;
 
+import com.example.ling_bot.utils.Emojis;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -38,7 +39,7 @@ public class MainMenuService {
         row1.add(new KeyboardButton(messageService.getReplyText(localeTag, "reply.fillingProfile")));
         row2.add(new KeyboardButton(messageService.getReplyText(localeTag, "reply.showUserProfile")));
         row2.add(new KeyboardButton(messageService.getReplyText(localeTag, "reply.downloadUserProfile")));
-        row3.add(new KeyboardButton(messageService.getReplyText(localeTag, "reply.helpMenu")));
+        row3.add(new KeyboardButton(messageService.getReplyText(localeTag, "reply.helpMenu", Emojis.SOS)));
         keyboard.add(row1);
         keyboard.add(row2);
         keyboard.add(row3);

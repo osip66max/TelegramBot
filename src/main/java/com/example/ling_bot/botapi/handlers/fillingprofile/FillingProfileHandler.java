@@ -64,7 +64,7 @@ public class FillingProfileHandler implements InputMessageHandler {
 
         if (botState.equals(BotState.ASK_AGE)) {
             profileData.setName(usersAnswer);
-            replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askAge");
+            replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askAge", Emojis.OLDER);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_GENDER);
         }
 
@@ -74,37 +74,37 @@ public class FillingProfileHandler implements InputMessageHandler {
                 replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askGender");
                 replyToUser.setReplyMarkup(getGenderButtonsMarkup(localeTag));
             } catch (Exception e) {
-                replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askAge");
+                replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askAge", Emojis.OLDER);
                 userDataCache.setUsersCurrentBotState(userId, BotState.ASK_GENDER);
             }
         }
 
         if (botState.equals(BotState.ASK_NUMBER)) {
             profileData.setGender(usersAnswer);
-            replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askNumber");
+            replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askNumber", Emojis.STAR);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOR);
         }
 
         if (botState.equals(BotState.ASK_COLOR)) {
             try {
                 profileData.setNumber(Integer.parseInt(usersAnswer));
-                replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askColor");
+                replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askColor", Emojis.STAR);
                 userDataCache.setUsersCurrentBotState(userId, BotState.ASK_MOVIE);
             } catch (NumberFormatException e) {
-                replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askNumber");
+                replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askNumber", Emojis.STAR);
                 userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOR);
             }
         }
 
         if (botState.equals(BotState.ASK_MOVIE)) {
             profileData.setColor(usersAnswer);
-            replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askMovie");
+            replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askMovie", Emojis.TV);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_SONG);
         }
 
         if (botState.equals(BotState.ASK_SONG)) {
             profileData.setMovie(usersAnswer);
-            replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askSong");
+            replyToUser = messagesService.getReplyMessage(chatId, localeTag, "reply.askSong", Emojis.STAR);
             userDataCache.setUsersCurrentBotState(userId, BotState.PROFILE_FILLED);
         }
 

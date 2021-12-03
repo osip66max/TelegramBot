@@ -5,6 +5,7 @@ import com.example.ling_bot.model.UserProfileData;
 import com.example.ling_bot.cache.UserDataCache;
 import com.example.ling_bot.service.MainMenuService;
 import com.example.ling_bot.service.ReplyMessageService;
+import com.example.ling_bot.utils.Emojis;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -77,11 +78,11 @@ public class TelegramFacade {
         String fillingProfile = messageService.getReplyText(localeTag, "reply.fillingProfile");
         String showUserProfile = messageService.getReplyText(localeTag, "reply.showUserProfile");
         String downloadUserProfile = messageService.getReplyText(localeTag, "reply.downloadUserProfile");
-        String helpMenu = messageService.getReplyText(localeTag, "reply.helpMenu");
+        String helpMenu = messageService.getReplyText(localeTag, "reply.helpMenu", Emojis.SOS);
 
         if ("/start".equals(inputMsg)) {
             botState = BotState.ASK_DESTINY;
-            lingTelegramBot.sendPhoto(chatId, messageService.getReplyText(localeTag, "reply.hello"), "static/images/img.png");
+            lingTelegramBot.sendPhoto(chatId, messageService.getReplyText(localeTag, "reply.hello", Emojis.ROBOT), "static/images/img.png");
         } else if (fillingProfile.equals(inputMsg)) {
             botState = BotState.FILLING_PROFILE;
         } else if (showUserProfile.equals(inputMsg)) {
@@ -112,9 +113,9 @@ public class TelegramFacade {
             callBackAnswer = new SendMessage(chatId, messageService.getReplyText(localeTag, "reply.askName"));
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_AGE);
         } else if (buttonQuery.getData().equals("buttonNo")) {
-            callBackAnswer = sendAnswerCallbackQuery(messageService.getReplyText(localeTag, "reply.return"), false, buttonQuery);
+            callBackAnswer = sendAnswerCallbackQuery(messageService.getReplyText(localeTag, "reply.return", Emojis.BACKWARD), false, buttonQuery);
         } else if (buttonQuery.getData().equals("buttonIWillThink")) {
-            callBackAnswer = sendAnswerCallbackQuery(messageService.getReplyText(localeTag, "reply.notWork"), true, buttonQuery);
+            callBackAnswer = sendAnswerCallbackQuery(messageService.getReplyText(localeTag, "reply.notWork", Emojis.BACKWARD), true, buttonQuery);
         }
 
         else if (buttonQuery.getData().equals("buttonMan")) {
@@ -122,13 +123,13 @@ public class TelegramFacade {
             userProfileData.setGender(messageService.getReplyText(localeTag, "reply.man"));
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOR);
-            callBackAnswer = messageService.getReplyMessage(chatId, localeTag,  "reply.askNumber");
+            callBackAnswer = messageService.getReplyMessage(chatId, localeTag,  "reply.askNumber", Emojis.STAR);
         } else if (buttonQuery.getData().equals("buttonWoman")) {
             UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
             userProfileData.setGender(messageService.getReplyText(localeTag, "reply.woman"));
             userDataCache.saveUserProfileData(userId, userProfileData);
             userDataCache.setUsersCurrentBotState(userId, BotState.ASK_COLOR);
-            callBackAnswer = messageService.getReplyMessage(chatId, localeTag, "reply.askNumber");
+            callBackAnswer = messageService.getReplyMessage(chatId, localeTag, "reply.askNumber", Emojis.STAR);
 
         } else {
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
