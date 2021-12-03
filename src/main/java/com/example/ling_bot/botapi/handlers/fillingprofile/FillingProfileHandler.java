@@ -2,7 +2,7 @@ package com.example.ling_bot.botapi.handlers.fillingprofile;
 
 import com.example.ling_bot.botapi.BotState;
 import com.example.ling_bot.botapi.InputMessageHandler;
-import com.example.ling_bot.dao.UserProfileDataAO;
+import com.example.ling_bot.dao.UserProfileDataAOImpl;
 import com.example.ling_bot.model.UserProfileData;
 import com.example.ling_bot.cache.UserDataCache;
 import com.example.ling_bot.service.PredictionService;
@@ -24,13 +24,13 @@ public class FillingProfileHandler implements InputMessageHandler {
     private final UserDataCache userDataCache;
     private final ReplyMessageService messagesService;
     private final PredictionService predictionService;
-    private final UserProfileDataAO userProfileDataAO;
+    private final UserProfileDataAOImpl userProfileDataAOImpl;
 
-    public FillingProfileHandler(UserDataCache userDataCache, ReplyMessageService messagesService, PredictionService predictionService, UserProfileDataAO userProfileDataAO) {
+    public FillingProfileHandler(UserDataCache userDataCache, ReplyMessageService messagesService, PredictionService predictionService, UserProfileDataAOImpl userProfileDataAOImpl) {
         this.userDataCache = userDataCache;
         this.messagesService = messagesService;
         this.predictionService = predictionService;
-        this.userProfileDataAO = userProfileDataAO;
+        this.userProfileDataAOImpl = userProfileDataAOImpl;
     }
 
     @Override
@@ -113,7 +113,7 @@ public class FillingProfileHandler implements InputMessageHandler {
             profileData.setChatId(chatId);
             profileData.setId(String.valueOf(userId));
 
-            userProfileDataAO.save(profileData);
+            userProfileDataAOImpl.save(profileData);
 
             userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
 
