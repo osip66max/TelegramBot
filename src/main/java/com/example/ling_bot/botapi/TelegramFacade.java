@@ -82,7 +82,7 @@ public class TelegramFacade {
 
         if ("/start".equals(inputMsg)) {
             botState = BotState.ASK_DESTINY;
-            lingTelegramBot.sendPhoto(chatId, messageService.getReplyText(localeTag, "reply.hello", Emojis.ROBOT), "static/images/img.png");
+            lingTelegramBot.sendPhoto(chatId, messageService.getReplyText(localeTag, "reply.hello", Emojis.MAGE), "static/images/img.png");
         } else if (fillingProfile.equals(inputMsg)) {
             botState = BotState.FILLING_PROFILE;
         } else if (showUserProfile.equals(inputMsg)) {

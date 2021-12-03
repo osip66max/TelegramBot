@@ -63,15 +63,18 @@ public class AskDestinyHandler implements InputMessageHandler {
 
         List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
         keyboardButtonsRow1.add(buttonYes);
-        keyboardButtonsRow1.add(buttonNo);
+        keyboardButtonsRow1.add(buttonIWillThink);
 
         List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
-        keyboardButtonsRow2.add(buttonIWillThink);
-        keyboardButtonsRow2.add(buttonIDontKnow);
+        keyboardButtonsRow2.add(buttonNo);
+
+        List<InlineKeyboardButton> keyboardButtonsRow3 = new ArrayList<>();
+        keyboardButtonsRow3.add(buttonIDontKnow);
 
         List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
         rowList.add(keyboardButtonsRow1);
         rowList.add(keyboardButtonsRow2);
+        rowList.add(keyboardButtonsRow3);
 
         inlineKeyboardMarkup.setKeyboard(rowList);
 

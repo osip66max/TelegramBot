@@ -31,7 +31,7 @@ public class ShowProfileHandler implements InputMessageHandler {
 
         userDataCache.setUsersCurrentBotState(userId, BotState.SHOW_MAIN_MENU);
         return new SendMessage(String.valueOf(message.getChatId()),
-                String.format("%s%n-------------------%n%s", messageService.getReplyText(localeTag, "reply.showProfile"), profileData.toString(localeTag, messageService)));
+                String.format("%s%n--------------------%n%s", messageService.getReplyText(localeTag, "reply.showProfile"), profileData.toString(localeTag, messageService)));
     }
 
     @Override
