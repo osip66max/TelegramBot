@@ -1,6 +1,7 @@
 package com.example.ling_bot.botapi;
 
 import com.example.ling_bot.LingTelegramBot;
+import com.example.ling_bot.dao.UserProfileDataAOImpl;
 import com.example.ling_bot.model.UserProfileData;
 import com.example.ling_bot.cache.UserDataCache;
 import com.example.ling_bot.service.MainMenuService;
@@ -31,14 +32,16 @@ public class TelegramFacade {
     private final MainMenuService mainMenuService;
     private final LingTelegramBot lingTelegramBot;
     private final ReplyMessageService messageService;
+    private final UserProfileDataAOImpl userProfileDataAOImpl;
 
     public TelegramFacade(BotStateContext botStateContext, UserDataCache userDataCache, MainMenuService mainMenuService,
-                          @Lazy LingTelegramBot lingTelegramBot, ReplyMessageService messageService) {
+                          @Lazy LingTelegramBot lingTelegramBot, ReplyMessageService messageService, UserProfileDataAOImpl userProfileDataAOImpl) {
         this.botStateContext = botStateContext;
         this.userDataCache = userDataCache;
         this.mainMenuService = mainMenuService;
         this.lingTelegramBot = lingTelegramBot;
         this.messageService = messageService;
+        this.userProfileDataAOImpl = userProfileDataAOImpl;
     }
 
     public BotApiMethod<?> handleUpdate(Update update) {
@@ -148,7 +151,7 @@ public class TelegramFacade {
 
     @SneakyThrows
     public InputFile getUsersProfile(Long userId, String localeTag) {
-        UserProfileData userProfileData = userDataCache.getUserProfileData(userId);
+        final UserProfileData userProfileData = userProfileDataAOImpl.show(String.valueOf(userId));
         File file = ResourceUtils.getFile("classpath:static/docs/users_profile.txt");
 
         try (FileWriter fw = new FileWriter(file.getAbsoluteFile());
