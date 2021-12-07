@@ -1,17 +1,17 @@
 package com.example.ling_bot.botapi;
 
 import com.example.ling_bot.LingTelegramBot;
+import com.example.ling_bot.cache.UserDataCache;
 import com.example.ling_bot.dao.UserProfileDataAOImpl;
 import com.example.ling_bot.model.UserProfileData;
-import com.example.ling_bot.cache.UserDataCache;
 import com.example.ling_bot.service.MainMenuService;
 import com.example.ling_bot.service.ReplyMessageService;
 import com.example.ling_bot.utils.Emojis;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -20,9 +20,7 @@ import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 
 @Component
 @Slf4j
@@ -85,7 +83,7 @@ public class TelegramFacade {
 
         if ("/start".equals(inputMsg)) {
             botState = BotState.ASK_DESTINY;
-            lingTelegramBot.sendPhoto(chatId, messageService.getReplyText(localeTag, "reply.hello", Emojis.MAGE), "static/images/img.png");
+            lingTelegramBot.sendPhoto(chatId, messageService.getReplyText(localeTag, "reply.hello", Emojis.MAGE), "src/main/resources/static/images/img.png");
         } else if (fillingProfile.equals(inputMsg)) {
             botState = BotState.FILLING_PROFILE;
         } else if (showUserProfile.equals(inputMsg)) {
@@ -149,14 +147,23 @@ public class TelegramFacade {
         return answerCallbackQuery;
     }
 
-    @SneakyThrows
+
     public InputFile getUsersProfile(Long userId, String localeTag) {
         final UserProfileData userProfileData = userProfileDataAOImpl.show(String.valueOf(userId));
-        File file = ResourceUtils.getFile("classpath:static/docs/users_profile.txt");
+        //File file = ResourceUtils.getFile("src/main/resources/static/docs/users_profile.txt");
 
-        try (FileWriter fw = new FileWriter(file.getAbsoluteFile());
-             BufferedWriter bw = new BufferedWriter(fw)) {
-            bw.write(userProfileData.toString(localeTag, messageService));
+        File file = new File("src/main/resources/static/docs/file.tmp");
+
+        try(InputStream inputStream = FileUtils.openInputStream(new File("src/main/resources/static/docs/users_profile.txt"))) {
+
+            FileUtils.copyInputStreamToFile(inputStream, file);
+
+            try (FileWriter fw = new FileWriter(file.getAbsoluteFile());
+                 BufferedWriter bw = new BufferedWriter(fw)) {
+                bw.write(userProfileData.toString(localeTag, messageService));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return new InputFile(file);
