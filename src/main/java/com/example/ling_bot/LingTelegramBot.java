@@ -61,7 +61,6 @@ public class LingTelegramBot extends TelegramWebhookBot {
     }
 
     public void sendPhoto(String chatId, String imageCaption, String imagePath) {
-        //File file = ResourceUtils.getFile("classpath:" + imagePath);
         try(InputStream inputStream = FileUtils.openInputStream(new File(imagePath))) {
             InputFile image = new InputFile(inputStream, "img.png");
             SendPhoto sendPhoto = new SendPhoto();
