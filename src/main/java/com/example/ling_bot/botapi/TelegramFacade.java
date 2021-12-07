@@ -150,11 +150,11 @@ public class TelegramFacade {
 
     public InputFile getUsersProfile(Long userId, String localeTag) {
         final UserProfileData userProfileData = userProfileDataAOImpl.show(String.valueOf(userId));
-        //File file = ResourceUtils.getFile("src/main/resources/static/docs/users_profile.txt");
+        //File file = ResourceUtils.getFile("src/main/resources/static/docs/file.txt");
 
-        File file = new File("src/main/resources/static/docs/file.tmp");
+        File file = new File("src/main/resources/static/docs/users_profile.txt");
 
-        try(InputStream inputStream = FileUtils.openInputStream(new File("src/main/resources/static/docs/users_profile.txt"))) {
+        try(InputStream inputStream = FileUtils.openInputStream(new File("src/main/resources/static/docs/file.txt"))) {
 
             FileUtils.copyInputStreamToFile(inputStream, file);
 
